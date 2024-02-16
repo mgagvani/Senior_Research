@@ -15,23 +15,9 @@ if __name__ == '__main__':
             ###################################################################
             # Send a list
             ###################################################################
-            list_ = [1, 3]
+            list_ = [[int(x) for x in input("steer throttle: ").split()]]
             list_size = link.tx_obj(list_)
             send_size += list_size
-            
-            ###################################################################
-            # Send a string
-            ###################################################################
-            str_ = 'hello'
-            str_size = link.tx_obj(str_, send_size) - send_size
-            send_size += str_size
-            
-            ###################################################################
-            # Send a float
-            ###################################################################
-            float_ = 5.234
-            float_size = link.tx_obj(float_, send_size) - send_size
-            send_size += float_size
             
             ###################################################################
             # Transmit all the data to send in a single packet
@@ -58,26 +44,12 @@ if __name__ == '__main__':
             rec_list_  = link.rx_obj(obj_type=type(list_),
                                      obj_byte_size=list_size,
                                      list_format='i')
-            
-            ###################################################################
-            # Parse response string
-            ###################################################################
-            rec_str_   = link.rx_obj(obj_type=type(str_),
-                                     obj_byte_size=str_size,
-                                     start_pos=list_size)
-            
-            ###################################################################
-            # Parse response float
-            ###################################################################
-            rec_float_ = link.rx_obj(obj_type=type(float_),
-                                     obj_byte_size=float_size,
-                                     start_pos=(list_size + str_size))
-            
+        
             ###################################################################
             # Display the received data
             ###################################################################
-            print('SENT: {} {} {}'.format(list_, str_, float_))
-            print('RCVD: {} {} {}'.format(rec_list_, rec_str_, rec_float_))
+            print('SENT: {}'.format(list_))
+            print('RCVD: {}'.format(rec_list_))
             print(' ')
     
     except KeyboardInterrupt:

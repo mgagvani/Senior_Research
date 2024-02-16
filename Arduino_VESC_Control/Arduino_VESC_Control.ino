@@ -18,14 +18,14 @@ void setup() {
  void loop() {
 
   // ramp up to 0.5 throttle
-    for (int i = 1500; i <= 1900; i+=100) {
+    for (int i = 1500; i <= 1800; i+=50) {
         Serial.println(i);
         esc.writeMicroseconds(i);
         delay(1000);
     }
 
     // ramp down to stop
-    for (int i = 1900; i >= 1500; i-=100) {
+    for (int i = 1800; i >= 1500; i-=50) {
         Serial.println(i);
         esc.writeMicroseconds(i);
         delay(1000);
