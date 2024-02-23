@@ -16,7 +16,12 @@ if __name__ == '__main__':
             # Send a list
             ###################################################################
             list_ = [[int(x) for x in input("steer throttle: ").split()]]
-            list_size = link.tx_obj(list_)
+            list_ = list_[0]
+            print(list_)
+
+            list_ = [list_[0] + 65536 * list_[1], list_[0] + 65536 * list_[1]]
+
+            list_size = link.tx_obj(list_[0])
             send_size += list_size
             
             ###################################################################
@@ -42,8 +47,12 @@ if __name__ == '__main__':
             # Parse response list
             ###################################################################
             rec_list_  = link.rx_obj(obj_type=type(list_),
-                                     obj_byte_size=list_size,
+                                     obj_byte_size=list_size*2,
                                      list_format='i')
+                        
+            # rec_list_  = link.rx_obj(obj_type=str,
+            #                             obj_byte_size=list_size,
+            #                             list_format='f')
         
             ###################################################################
             # Display the received data

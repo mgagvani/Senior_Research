@@ -12,6 +12,7 @@ Servo steer;
 Servo throttle;
 
 uint16_t data[2] = {1500, 1500};
+uint32_t new_data;
 
 
 void setup()
@@ -35,17 +36,25 @@ void loop()
     {   
         // recieve
         uint16_t recSize = 0;
-        recSize = myTransfer.rxObj(data, recSize);
+        recSize = myTransfer.rxObj(new_data, recSize);
+
+        // compute steer/throttle
+        uint16_t steerVal = new_data % 65536;
+        uint16_t throttleVal = new_data / 65536;
+
+        // put it back in data arr to send back
+        data[0] = steerVal;
+        data[1] = throttleVal;
 
         // send all received data back to Python
-        uint16_t sendSize = sizeof(data);
+        uint16_t sendSize = sizeof(data)*2;
         for (uint16_t i = 0; i < recSize; i++)
-            sendSize = myTransfer.txObj(data, sendSize);
+            sendSize += myTransfer.txObj(data, sendSize);
         myTransfer.sendData(sendSize);
 
         // actuate
-        steer.writeMicroseconds(data[0]);
-        throttle.writeMicroseconds(data[1]);
+        steer.writeMicroseconds(steerVal);
+        throttle.writeMicroseconds(throttleVal);
 
         // debug
         if (data[1] > 1000) {
