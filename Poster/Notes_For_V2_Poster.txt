@@ -1,0 +1,8 @@
+* Align the bottom left section text with the header. 
+* Change autoencoder section text so that it makes it clear that I actually did that
+* Provide more details on the autoencoder (reduction) since it is a central part of my project
+* Fix white space in justified text (words   are    very    far    apart)
+* Make top bar smaller so there is more room
+* Add TJ CSL Logo (ME)
+
+* Buy vs buying in the Thank you section
